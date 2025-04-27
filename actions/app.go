@@ -67,6 +67,12 @@ func App() *buffalo.App {
 
 		app.GET("/", HomeHandler)
 
+		// GraphQL endpoint
+		app.POST("/query", GraphqlHandler()) // POST for queries/mutations
+
+		// GraphQL Playground UI
+		app.GET("/playground", PlaygroundHandler()) // GET to view the playground
+
 		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
 	})
 
