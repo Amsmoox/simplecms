@@ -36,4 +36,13 @@ We recommend you heading over to [http://gobuffalo.io](http://gobuffalo.io) and 
 
 Good luck!
 
+## GraphQL Support
+
+This project includes GraphQL support using gqlgen. To access the GraphQL API:
+
+- **GraphQL Endpoint**: `POST /query`
+- **GraphQL Playground**: Open [http://localhost:3000/playground](http://localhost:3000/playground) in your browser
+
+For detailed documentation on the GraphQL functionality, see [GRAPHQL.md](GRAPHQL.md).
+
 [Powered by Buffalo](http://gobuffalo.io)

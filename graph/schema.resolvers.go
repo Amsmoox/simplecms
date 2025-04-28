@@ -8,16 +8,95 @@ import (
 	"context"
 	"fmt"
 	"simplecms/graph/model"
+	"github.com/gobuffalo/buffalo"
+	"github.com/gobuffalo/pop/v6"
+	//"github.com/google/uuid"
 )
+
+// Example in-memory storage for demonstration
+var todoList = []*model.Todo{}
+var userList = []*model.User{
+	{ID: "1", Name: "User 1"},
+	{ID: "2", Name: "User 2"},
+}
+
+// BuffaloContextKey is the key for accessing Buffalo context
+const BuffaloContextKey = "buffalo_ctx"
+
+// GetBuffaloContext extracts Buffalo context from GraphQL context
+func GetBuffaloContext(ctx context.Context) (buffalo.Context, error) {
+	c, ok := ctx.Value(BuffaloContextKey).(buffalo.Context)
+	if !ok {
+		return nil, fmt.Errorf("could not retrieve buffalo context")
+	}
+	return c, nil
+}
+
+// GetTransaction gets the database transaction from Buffalo context
+func GetTransaction(ctx context.Context) (*pop.Connection, error) {
+	c, err := GetBuffaloContext(ctx)
+	if err != nil {
+		return nil, err
+	}
+	
+	tx, ok := c.Value("tx").(*pop.Connection)
+	if !ok {
+		return nil, fmt.Errorf("could not retrieve database connection")
+	}
+	
+	return tx, nil
+}
 
 // CreateTodo is the resolver for the createTodo field.
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: CreateTodo - createTodo"))
+	// In a real application, you would:
+	// 1. Get the Buffalo context
+	// 2. Get the transaction
+	// 3. Save to the database
+	
+	// For this example, we'll just use in-memory storage
+	user := findUser(input.UserID)
+	if user == nil {
+		return nil, fmt.Errorf("user not found")
+	}
+	
+	todo := &model.Todo{
+		ID:   fmt.Sprintf("T%d", len(todoList)+1),
+		Text: input.Text,
+		Done: false,
+		User: user,
+	}
+	
+	todoList = append(todoList, todo)
+	return todo, nil
 }
 
 // Todos is the resolver for the todos field.
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: Todos - todos"))
+	// In a real application, you would:
+	// 1. Get the Buffalo context
+	// 2. Get the transaction
+	// 3. Query the database
+	
+	// Demonstrate accessing Buffalo context (for illustration only)
+	_, err := GetBuffaloContext(ctx)
+	if err != nil {
+		// Log the error but continue with demo data
+		fmt.Printf("Warning: %v\n", err)
+	}
+	
+	// For this example, return the in-memory list
+	return todoList, nil
+}
+
+// Helper function to find a user by ID
+func findUser(id string) *model.User {
+	for _, u := range userList {
+		if u.ID == id {
+			return u
+		}
+	}
+	return nil
 }
 
 // Mutation returns MutationResolver implementation.
