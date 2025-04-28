@@ -67,11 +67,19 @@ func App() *buffalo.App {
 
 		app.GET("/", HomeHandler)
 
+		// Create handler references first
+		gqlHandler := GraphqlHandler()
+		playgroundHandler := PlaygroundHandler()
+
+		// GraphQL group with CSRF disabled for those specific handler instances
+		graphqlGroup := app.Group("/")
+		graphqlGroup.Middleware.Skip(csrf.New, gqlHandler, playgroundHandler)
+
 		// GraphQL endpoint
-		app.POST("/query", GraphqlHandler()) // POST for queries/mutations
+		graphqlGroup.POST("/query", gqlHandler) // POST for queries/mutations
 
 		// GraphQL Playground UI
-		app.GET("/playground", PlaygroundHandler()) // GET to view the playground
+		graphqlGroup.GET("/playground", playgroundHandler) // GET to view the playground
 
 		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
 	})

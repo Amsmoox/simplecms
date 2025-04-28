@@ -128,6 +128,11 @@ The GraphQL integration works as follows:
 
 The handlers are defined in `actions/graphql.go` and registered in `actions/app.go`.
 
+**Note:** CSRF protection is disabled for these endpoints to allow the GraphQL Playground to work correctly. In a production environment, you should consider implementing an alternative security approach such as:
+- Token-based authentication
+- GraphQL-specific authentication middleware
+- Origin/Referer checking
+
 ## Database Integration
 
 To use your Buffalo database models with GraphQL:
