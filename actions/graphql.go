@@ -21,7 +21,7 @@ func GraphqlHandler() buffalo.Handler {
 		// Add Buffalo context to GraphQL context for DB access
 		ctx := context.WithValue(c.Request().Context(), BuffaloContextKey, c)
 		r := c.Request().WithContext(ctx)
-		
+
 		h.ServeHTTP(c.Response(), r)
 		return nil // Indicate the request was handled
 	}
@@ -35,4 +35,4 @@ func PlaygroundHandler() buffalo.Handler {
 		h.ServeHTTP(c.Response(), c.Request())
 		return nil // Indicate the request was handled
 	}
-} 
+}
