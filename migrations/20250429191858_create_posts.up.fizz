@@ -1,0 +1,8 @@
+create_table("posts") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("title", "text", {})
+	t.Column("content", "text", {})
+	t.Column("user_id", "uuid", {})
+	t.ForeignKey("user_id", {"users": ["id"]}, {"on_delete": "cascade"})
+	t.Timestamps()
+}

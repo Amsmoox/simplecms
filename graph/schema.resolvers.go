@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 	"simplecms/graph/model"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop/v6"
 )
@@ -37,12 +38,12 @@ func GetTransaction(ctx context.Context) (*pop.Connection, error) {
 	if err != nil {
 		return nil, err
 	}
-	
+
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
 		return nil, fmt.Errorf("could not retrieve database connection")
 	}
-	
+
 	return tx, nil
 }
 
@@ -52,20 +53,20 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 	// 1. Get the Buffalo context
 	// 2. Get the transaction
 	// 3. Save to the database
-	
+
 	// For this example, we'll just use in-memory storage
 	user := findUser(input.UserID)
 	if user == nil {
 		return nil, fmt.Errorf("user not found")
 	}
-	
+
 	todo := &model.Todo{
 		ID:   fmt.Sprintf("T%d", len(todoList)+1),
 		Text: input.Text,
 		Done: false,
 		User: user,
 	}
-	
+
 	todoList = append(todoList, todo)
 	return todo, nil
 }
@@ -76,14 +77,14 @@ func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 	// 1. Get the Buffalo context
 	// 2. Get the transaction
 	// 3. Query the database
-	
+
 	// Demonstrate accessing Buffalo context (for illustration only)
 	_, err := GetBuffaloContext(ctx)
 	if err != nil {
 		// Log the error but continue with demo data
 		fmt.Printf("Warning: %v\n", err)
 	}
-	
+
 	// For this example, return the in-memory list
 	return todoList, nil
 }

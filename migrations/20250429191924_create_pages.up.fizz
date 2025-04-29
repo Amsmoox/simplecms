@@ -1,0 +1,8 @@
+create_table("pages") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("title", "text", {})
+	t.Column("slug", "text", {})
+	t.Column("body", "text", {})
+	t.Timestamps()
+	t.Index("slug", {"unique": true})
+}
