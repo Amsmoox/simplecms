@@ -1,0 +1,79 @@
+<div class="row mt-4">
+  <div class="col-md-6 offset-md-3">
+    <div class="card">
+      <div class="card-header">
+        <h3>Register</h3>
+      </div>
+      <div class="card-body">
+        <%= if (errors) { %>
+          <div class="alert alert-danger">
+            <ul>
+              <%= for (key, val) in errors { %>
+                <%= for (error) in val { %>
+                  <li><%= error %></li>
+                <% } %>
+              <% } %>
+            </ul>
+          </div>
+        <% } %>
+        
+        <form action="/register" method="POST">
+          <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>" />
+          
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control <%= if (errors["name"]) { %>is-invalid<% } %>" 
+                  id="name" name="Name" value="<%= user.Name %>" required>
+            <div class="invalid-feedback">
+              <%= if (errors["name"]) { %>
+                <%= errors["name"] %>
+              <% } %>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control <%= if (errors["email"]) { %>is-invalid<% } %>" 
+                  id="email" name="Email" value="<%= user.Email %>" required>
+            <div class="invalid-feedback">
+              <%= if (errors["email"]) { %>
+                <%= errors["email"] %>
+              <% } %>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control <%= if (errors["password"]) { %>is-invalid<% } %>" 
+                  id="password" name="Password" required>
+            <div class="invalid-feedback">
+              <%= if (errors["password"]) { %>
+                <%= errors["password"] %>
+              <% } %>
+            </div>
+            <div class="form-text">Password must be at least 8 characters</div>
+          </div>
+          
+          <div class="mb-3">
+            <label for="password_confirmation" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control <%= if (errors["password_confirmation"]) { %>is-invalid<% } %>" 
+                  id="password_confirmation" name="password_confirmation" required>
+            <div class="invalid-feedback">
+              <%= if (errors["password_confirmation"]) { %>
+                <%= errors["password_confirmation"] %>
+              <% } %>
+            </div>
+          </div>
+          
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Register</button>
+          </div>
+        </form>
+        
+        <div class="mt-3 text-center">
+          Already have an account? <a href="/login">Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

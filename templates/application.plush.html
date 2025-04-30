@@ -3,13 +3,66 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-    <title>Buffalo - Simplecms</title>
+    <title>AcaDelta CMS</title>
     <%= stylesheetTag("application.css") %>
     <meta name="csrf-param" content="authenticity_token" />
     <meta name="csrf-token" content="<%= authenticity_token %>" />
     <link rel="icon" href="<%= assetPath("images/favicon.ico") %>">
   </head>
   <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+      <div class="container">
+        <a class="navbar-brand" href="/">AcaDelta CMS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages">Pages</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/posts">Posts</a>
+            </li>
+          </ul>
+          
+          <ul class="navbar-nav ms-auto">
+            <%= if (current_user) { %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                  Welcome, <%= current_user.Name %>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="/admin">Admin Dashboard</a></li>
+                  <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li>
+                    <form action="/logout" method="POST" class="m-0 p-0">
+                      <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>" />
+                      <input name="_method" type="hidden" value="DELETE" />
+                      <button type="submit" class="dropdown-item">Logout</button>
+                    </form>
+                  </li>
+                </ul>
+              </li>
+            <% } else { %>
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/register">Register</a>
+              </li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
     <div class="container">
       <%= partial("flash.html") %>

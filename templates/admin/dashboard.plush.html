@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="col-md-3">
+    <div class="card mb-4">
+      <div class="card-header">
+        Admin Navigation
+      </div>
+      <div class="list-group list-group-flush">
+        <a href="/admin" class="list-group-item list-group-item-action active">Dashboard</a>
+        <a href="/admin/pages" class="list-group-item list-group-item-action">Manage Pages</a>
+        <a href="/admin/posts" class="list-group-item list-group-item-action">Manage Posts</a>
+        <a href="/admin/users" class="list-group-item list-group-item-action">Manage Users</a>
+        <a href="/admin/comments" class="list-group-item list-group-item-action">Manage Comments</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-header">
+        <h3>Admin Dashboard</h3>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Welcome, <%= current_user.Name %>!</h5>
+        <p class="card-text">This is your admin dashboard where you can manage your CMS content.</p>
+        
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <div class="card text-center mb-4">
+              <div class="card-body">
+                <h5 class="card-title">Pages</h5>
+                <p class="card-text display-4">0</p>
+                <a href="/admin/pages" class="btn btn-outline-primary">Manage Pages</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="card text-center mb-4">
+              <div class="card-body">
+                <h5 class="card-title">Posts</h5>
+                <p class="card-text display-4">0</p>
+                <a href="/admin/posts" class="btn btn-outline-primary">Manage Posts</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="card text-center mb-4">
+              <div class="card-body">
+                <h5 class="card-title">Comments</h5>
+                <p class="card-text display-4">0</p>
+                <a href="/admin/comments" class="btn btn-outline-primary">Manage Comments</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="alert alert-info">
+          <h5>Getting Started</h5>
+          <p>Here are some things you can do:</p>
+          <ul>
+            <li>Create a new page</li>
+            <li>Write a blog post</li>
+            <li>Manage user accounts</li>
+            <li>Moderate comments</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
