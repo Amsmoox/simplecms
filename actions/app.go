@@ -15,9 +15,7 @@ import (
 	"github.com/gobuffalo/middleware/forcessl"
 	"github.com/gobuffalo/middleware/i18n"
 	"github.com/gobuffalo/middleware/paramlogger"
-	"github.com/gobuffalo/middleware"
 	"github.com/unrolled/secure"
-	"github.com/gobuffalo/middleware/methodoverride"
 )
 
 // ENV is used to help switch settings based on where the
@@ -56,9 +54,6 @@ func App() *buffalo.App {
 		// Log request parameters (filters apply).
 		app.Use(paramlogger.ParameterLogger)
 
-		// Method override middleware - important for DELETE, PUT, etc.
-		app.Use(middleware.MethodOverride)
-
 		// Protect against CSRF attacks. https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
 		// Remove to disable this.
 		app.Use(csrf.New)
@@ -80,7 +75,7 @@ func App() *buffalo.App {
 		app.POST("/register", RegisterPost)
 		app.GET("/login", LoginGet)
 		app.POST("/login", LoginPost)
-		app.DELETE("/logout", Logout)
+		app.GET("/logout", Logout)
 
 		// Create handler references first
 		gqlHandler := GraphqlHandler()

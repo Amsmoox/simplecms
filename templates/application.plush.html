@@ -43,11 +43,7 @@
                   <li><a class="dropdown-item" href="/profile">Profile</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li>
-                    <form action="/logout" method="POST" class="m-0 p-0">
-                      <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>" />
-                      <input name="_method" type="hidden" value="DELETE" />
-                      <button type="submit" class="dropdown-item">Logout</button>
-                    </form>
+                    <a class="dropdown-item" href="/logout">Logout</a>
                   </li>
                 </ul>
               </li>
