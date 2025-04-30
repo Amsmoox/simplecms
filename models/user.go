@@ -16,6 +16,7 @@ type User struct {
 	Name         string    `json:"name" db:"name"`
 	Email        string    `json:"email" db:"email"`
 	PasswordHash string    `json:"password_hash" db:"password_hash"`
+	Password     string    `json:"-" db:"-"` // Not stored in DB, used for form binding
 	Posts        Posts     `json:"posts,omitempty" has_many:"posts"`
 	Comments     Comments  `json:"comments,omitempty" has_many:"comments"`
 	CreatedAt    time.Time `json:"created_at" db:"created_at"`
@@ -44,7 +45,6 @@ func (u *User) Validate(tx *pop.Connection) (*validate.Errors, error) {
 		&validators.StringIsPresent{Field: u.Name, Name: "Name"},
 		&validators.StringIsPresent{Field: u.Email, Name: "Email"},
 		&validators.EmailIsPresent{Field: u.Email, Name: "Email"},
-		&validators.StringIsPresent{Field: u.PasswordHash, Name: "PasswordHash"},
 	), nil
 }
 

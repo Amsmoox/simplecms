@@ -5,6 +5,9 @@ import (
 	"simplecms/templates"
 
 	"github.com/gobuffalo/buffalo/render"
+	"github.com/gobuffalo/plush/v4"
+	"errors"
+	"html/template"
 )
 
 var r *render.Engine
@@ -26,6 +29,15 @@ func init() {
 			// below and import "github.com/gobuffalo/helpers/forms"
 			// forms.FormKey:     forms.Form,
 			// forms.FormForKey:  forms.FormFor,
+			
+			// Add CSRF helper
+			"csrf": func(ctx plush.HelperContext) (template.HTML, error) {
+				tok, ok := ctx.Value("authenticity_token").(string)
+				if !ok {
+					return "", errors.New("CSRF token not found in context")
+				}
+				return template.HTML(`<input type="hidden" name="authenticity_token" value="` + tok + `" />`), nil
+			},
 		},
 	})
 }
